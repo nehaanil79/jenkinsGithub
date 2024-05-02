@@ -65,5 +65,10 @@ pipeline {
                 echo "deploy the application to a production server (e.g., AWS EC2 instance)."
             }
         }
+        stage('Complete stage for testing') {
+            steps {
+                echo "Just testing"
+            }
+        }
     }
 }
