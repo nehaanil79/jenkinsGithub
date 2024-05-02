@@ -1,0 +1,69 @@
+pipeline {
+    agent any
+
+
+
+    stages {
+        stage('Build') {
+            steps {
+                echo "The code is build using an automation tool namrd maven."
+            }
+        }
+        stage('Unit and Integration Tests') {
+            steps {
+                echo "Run unit tests to ensure the code functions as expected and run integration tests to ensure the different components of the application work together as expected. Automation tool used is JUnit"
+            }
+            post{
+                success{
+                    mail to: "nehaanil79@gmail.com",
+                    subject: "Unit and Integration Tests status email",
+                    body: "Test was successful"
+                }
+                failure {
+                    mail to: "nehaanil79@gmail.com",
+                    subject: "Unit and Integration Tests status email",
+                    body: "Test was failure"
+                }
+            }
+        }
+        stage('Code Analysis') {
+            steps {
+                echo "Integrate a code analysis tool to analyse the code and ensure it meets industry standards. Automation tool used is SonarQube"
+            }
+        }
+        stage('Security Scan') {
+            steps {
+                echo "Perform a security scan on the code using a tool to identify any vulnerabilities. The automation tool used is OWASP ZAP."
+            }
+            post{
+                success{
+                    mail to: "nehaanil79@gmail.com",
+                    subject: "Security Scan status email",
+                    body: "Scan was successful"
+                }
+                failure {
+                    mail to: "nehaanil79@gmail.com",
+                    subject: "Security Scan status email",
+                    body: "Scan was failure"
+                }
+            }
+            
+        }
+        stage('Deploy to Staging') {
+            steps {
+                echo "Deploy the application to a staging server (e.g., AWS EC2 instance)"
+            }
+        }
+
+        stage('Integration Tests on Staging') {
+            steps {
+                echo "Run integration tests on the staging environment to ensure the application functions as expected in a production-like environment. Automation tool used is Selenium"
+            }
+        }
+        stage('Deploy to Production') {
+            steps {
+                echo "deploy the application to a production server (e.g., AWS EC2 instance)."
+            }
+        }
+    }
+}
